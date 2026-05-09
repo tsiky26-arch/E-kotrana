@@ -40,6 +40,21 @@
         <div class="kpi-card"><div class="kpi-label">Remise Gold</div><div class="kpi-value"><?= (int) $user['is_gold'] === 1 ? esc($goldDiscount) . '%' : '0%' ?></div></div>
       </section>
 
+      <section class="visual-strip section-gap">
+        <article class="visual-card">
+          <img src="https://images.unsplash.com/photo-1749280446532-60869b4b9863?auto=format&fit=crop&q=80&w=900" alt="Bol equilibre avec legumes" loading="lazy">
+          <div><strong>Repas equilibres</strong><span>Des assiettes colorees pour tenir le rythme.</span></div>
+        </article>
+        <article class="visual-card">
+          <img src="https://images.unsplash.com/photo-1728636945265-03f10f048728?auto=format&fit=crop&q=80&w=900" alt="Salade de legumes frais" loading="lazy">
+          <div><strong>Suivi nutrition</strong><span>Des choix simples, visibles et mesurables.</span></div>
+        </article>
+        <article class="visual-card">
+          <img src="https://images.unsplash.com/photo-1773816709679-d335f43aba83?auto=format&fit=crop&q=80&w=900" alt="Marche active dans un parc" loading="lazy">
+          <div><strong>Activite douce</strong><span>Un programme qui avance avec votre quotidien.</span></div>
+        </article>
+      </section>
+
       <section class="dash-grid section-gap">
         <form class="form-card" method="post" action="/user/objectif">
           <?= csrf_field() ?>
