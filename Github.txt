@@ -31,6 +31,7 @@ git checkout -b feature/dashboard origin/dev
 git add .
 git commit -m "Ajouter page d'accueil utilisateur"
 git push -u origin feature/dashboard
+git checkout dev 
 
 
 # ========== BUGFIX ==========(ra ohatra ka misy bug de manao branche bugfix kely)
