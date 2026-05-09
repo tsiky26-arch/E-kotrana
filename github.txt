@@ -1,0 +1,61 @@
+# ========== SEMAINE 1 ==========
+
+# 1. Configuration
+git clone lien du repository + dossier local
+cd dossier local
+git checkout -b dev (mi creer anle branche dev)
+git push -u origin dev (mi initialize anle branche dev)
+
+# ========== FEATURE 1 ==========(branche alaina ao amle dev)
+
+# 2. Créer feature pour login(m crer branche anaovana login)
+git checkout -b feature/login origin/dev (ilay /login io zany nenaranle branche temporaire de ny origine any dev)
+# ...développer le login...
+git add .
+git commit -m "message"
+git push -u origin feature/login (ny anaranle feature atao mifanaraka amle changement atao)
+de manomboka eo am git add . ilay mandefa anle changement natao temporaire
+
+
+# 3. Mettre à jour local
+git checkout dev
+git pull origin dev 
+(reo commande roa reo manao à jour ny dossier local maka an'izay ao @ dev)
+git branch -d feature/login (ito ilay mamafa anle branche temporaire)
+
+# ========== FEATURE 2 ==========(branche kely afa ndray )
+
+# 4. Nouvelle feature
+git checkout -b feature/dashboard origin/dev
+# ...développer le dashboard...
+git add .
+git commit -m "Ajouter page d'accueil utilisateur"
+git push -u origin feature/dashboard
+
+
+# ========== BUGFIX ==========(ra ohatra ka misy bug de manao branche bugfix kely)
+
+# 5. Correction rapide
+git checkout -b bugfix/navbar-responsive origin/dev
+# ...corriger le bug...
+git add .
+git commit -m "Fixer responsive du navbar"
+git push -u origin bugfix/navbar-responsive
+
+
+# ========== RELEASE EN PRODUCTION ==========
+
+# 6. Tester en dev (ito hi testena anle code ao am dev)
+git checkout dev
+git pull origin dev
+npm test
+npm run build
+(exemple ana lancement fotsiny le npm)
+
+# 7. Pousser vers main (rehefa mandeha tsara le dev de ito n mandefa anle izy ao am main )
+git checkout main
+git pull origin main
+git merge dev
+git push origin main
+
+
