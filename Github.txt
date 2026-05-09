@@ -15,13 +15,15 @@ git add .
 git commit -m "message"
 git push -u origin feature/login (ny anaranle feature atao mifanaraka amle changement atao)
 de manomboka eo am git add . ilay mandefa anle changement natao temporaire
-
+git checkout dev 
+git merge feature/login (mandefa anle commit any amle dev )
 
 # 3. Mettre à jour local
 git checkout dev
 git pull origin dev 
 (reo commande roa reo manao à jour ny dossier local maka an'izay ao @ dev)
-git branch -d feature/login (ito ilay mamafa anle branche temporaire)
+git branch -d feature/login (ito ilay mamafa anle branche temporaire local )
+ git push origin --delete feature/login(mamafa anle branch en remote )
 
 # ========== FEATURE 2 ==========(branche kely afa ndray )
 
@@ -32,6 +34,12 @@ git add .
 git commit -m "Ajouter page d'accueil utilisateur"
 git push -u origin feature/dashboard
 git checkout dev 
+git merge feature/dashboard
+git checkout dev 
+git pull origin dev 
+git checkout dev 
+git branch -d feature/dashboard
+git push origin --delete feature/dashboard
 
 
 # ========== BUGFIX ==========(ra ohatra ka misy bug de manao branche bugfix kely)
