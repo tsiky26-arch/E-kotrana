@@ -71,20 +71,57 @@
           <button class="btn btn-primary" type="submit">Ajouter regime</button>
         </form>
         <div class="table-card inner">
-          <table><thead><tr><th>Nom</th><th>Duree</th><th>Prix</th><th>Variation</th><th>Composition</th><th>Objectifs</th><th>Action</th></tr></thead><tbody>
+          <table><thead><tr><th>Nom</th><th>Duree</th><th>Prix</th><th>Variation</th><th>Composition</th><th>Objectifs</th><th>Actions</th></tr></thead><tbody>
             <?php foreach ($regimes as $regime): ?>
               <tr>
-                <td><strong><?= esc($regime['nom']) ?></strong><div class="field-hint"><?= (int) $regime['actif'] === 1 ? 'Actif' : 'Desactive' ?></div></td>
-                <td><?= (int) $regime['duree_valeur'] ?> <?= esc($regime['duree_unite']) ?></td>
-                <td><?= esc(number_format((float) $regime['prix'], 2)) ?></td>
-                <td><?= esc($regime['variation_poids_min_kg']) ?> a <?= esc($regime['variation_poids_max_kg']) ?> kg</td>
-                <td><?= esc($regime['pct_viande']) ?> / <?= esc($regime['pct_poisson']) ?> / <?= esc($regime['pct_volaille']) ?> / <?= esc($regime['pct_autres']) ?></td>
-                <td><?= esc($regime['objectif_cible']) ?></td>
-                <td><form method="post" action="/admin/regimes/<?= (int) $regime['id'] ?>/delete"><?= csrf_field() ?><button class="btn btn-danger btn-sm" type="submit">Desactiver</button></form></td>
+                <form method="post" action="/admin/regimes/<?= (int) $regime['id'] ?>">
+                  <?= csrf_field() ?>
+                  <td>
+                    <input name="nom" value="<?= esc($regime['nom']) ?>" required>
+                    <div class="field-hint"><?= (int) $regime['actif'] === 1 ? 'Actif' : 'Desactive' ?></div>
+                    <input type="hidden" name="description" value="<?= esc($regime['description']) ?>">
+                  </td>
+                  <td>
+                    <div class="inline-actions">
+                      <input type="number" min="1" name="duree_valeur" value="<?= esc($regime['duree_valeur']) ?>" required>
+                      <select name="duree_unite">
+                        <option value="semaines" <?= $regime['duree_unite'] === 'semaines' ? 'selected' : '' ?>>semaines</option>
+                        <option value="mois" <?= $regime['duree_unite'] === 'mois' ? 'selected' : '' ?>>mois</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td><input type="number" step="0.01" name="prix" value="<?= esc($regime['prix']) ?>" required></td>
+                  <td>
+                    <div class="inline-actions">
+                      <input type="number" step="0.01" name="variation_poids_min_kg" value="<?= esc($regime['variation_poids_min_kg']) ?>">
+                      <input type="number" step="0.01" name="variation_poids_max_kg" value="<?= esc($regime['variation_poids_max_kg']) ?>">
+                    </div>
+                  </td>
+                  <td>
+                    <div class="inline-actions">
+                      <input type="number" step="0.01" name="pct_viande" value="<?= esc($regime['pct_viande']) ?>">
+                      <input type="number" step="0.01" name="pct_poisson" value="<?= esc($regime['pct_poisson']) ?>">
+                      <input type="number" step="0.01" name="pct_volaille" value="<?= esc($regime['pct_volaille']) ?>">
+                    </div>
+                  </td>
+                  <td>
+                    <?php $selectedObjectifs = array_map('trim', explode(',', (string) $regime['objectif_cible'])); ?>
+                    <select name="objectif_cible[]" multiple>
+                      <?php foreach ($objectives as $key => $label): ?>
+                        <option value="<?= esc($key) ?>" <?= in_array($key, $selectedObjectifs, true) ? 'selected' : '' ?>><?= esc($label) ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" type="submit">Modifier</button>
+                    <button class="btn btn-danger btn-sm" type="submit" formaction="/admin/regimes/<?= (int) $regime['id'] ?>/delete">Desactiver</button>
+                  </td>
+                </form>
               </tr>
             <?php endforeach; ?>
           </tbody></table>
         </div>
+        <div class="field-hint section-gap">Pour modifier un regime, reutilisez le formulaire d'ajout avec les nouvelles valeurs puis validez. Le bouton "Reenregistrer" confirme rapidement les donnees actuelles.</div>
       </section>
 
       <section id="activites" class="form-card section-gap">
@@ -100,11 +137,48 @@
           <div class="span-3"><label class="field-label">Description</label><input name="description"></div>
           <button class="btn btn-primary" type="submit">Ajouter activite</button>
         </form>
-        <div class="table-card inner"><table><thead><tr><th>Nom</th><th>Categorie</th><th>Intensite</th><th>Calories</th><th>Frequence</th><th>Objectifs</th><th>Action</th></tr></thead><tbody>
-          <?php foreach ($activites as $activite): ?>
-            <tr><td><strong><?= esc($activite['nom']) ?></strong></td><td><?= esc($activite['categorie']) ?></td><td><?= esc($activite['intensite']) ?></td><td><?= (int) $activite['calories_par_heure'] ?></td><td><?= (int) $activite['frequence_semaine'] ?></td><td><?= esc($activite['objectif_compatible']) ?></td><td><form method="post" action="/admin/activites/<?= (int) $activite['id'] ?>/delete"><?= csrf_field() ?><button class="btn btn-danger btn-sm" type="submit">Desactiver</button></form></td></tr>
+        <div class="table-card inner"><table><thead><tr><th>Nom</th><th>Categorie</th><th>Intensite</th><th>Calories</th><th>Frequence</th><th>Objectifs</th><th>Actions</th></tr></thead><tbody>
+            <?php foreach ($activites as $activite): ?>
+            <tr>
+              <form method="post" action="/admin/activites/<?= (int) $activite['id'] ?>">
+                <?= csrf_field() ?>
+                <td>
+                  <input name="nom" value="<?= esc($activite['nom']) ?>" required>
+                  <input type="hidden" name="description" value="<?= esc($activite['description']) ?>">
+                </td>
+                <td>
+                  <select name="categorie_id">
+                    <?php foreach ($categories as $category): ?>
+                      <option value="<?= (int) $category['id'] ?>" <?= (int) $category['id'] === (int) $activite['categorie_id'] ? 'selected' : '' ?>><?= esc($category['nom']) ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </td>
+                <td>
+                  <select name="intensite">
+                    <option value="faible" <?= $activite['intensite'] === 'faible' ? 'selected' : '' ?>>faible</option>
+                    <option value="moderee" <?= $activite['intensite'] === 'moderee' ? 'selected' : '' ?>>moderee</option>
+                    <option value="elevee" <?= $activite['intensite'] === 'elevee' ? 'selected' : '' ?>>elevee</option>
+                  </select>
+                </td>
+                <td><input type="number" name="calories_par_heure" value="<?= esc($activite['calories_par_heure']) ?>"></td>
+                <td><input type="number" name="frequence_semaine" value="<?= esc($activite['frequence_semaine']) ?>"></td>
+                <td>
+                  <?php $selectedCompat = array_map('trim', explode(',', (string) $activite['objectif_compatible'])); ?>
+                  <select name="objectif_compatible[]" multiple>
+                    <?php foreach ($objectives as $key => $label): ?>
+                      <option value="<?= esc($key) ?>" <?= in_array($key, $selectedCompat, true) ? 'selected' : '' ?>><?= esc($label) ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </td>
+                <td>
+                  <button class="btn btn-secondary btn-sm" type="submit">Modifier</button>
+                  <button class="btn btn-danger btn-sm" type="submit" formaction="/admin/activites/<?= (int) $activite['id'] ?>/delete">Desactiver</button>
+                </td>
+              </form>
+            </tr>
           <?php endforeach; ?>
         </tbody></table></div>
+        <div class="field-hint section-gap">Pour modifier une activite, reutilisez le formulaire d'ajout avec les nouvelles valeurs puis validez. Le bouton "Reenregistrer" confirme rapidement les donnees actuelles.</div>
       </section>
 
       <section id="codes" class="form-card section-gap">
