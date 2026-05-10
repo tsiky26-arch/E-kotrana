@@ -5,31 +5,31 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Users::login');
-$routes->get('login', 'Users::login');
-$routes->post('login', 'Users::attemptLogin');
-$routes->get('logout', 'Users::logout');
+$routes->get('/', 'AuthController::login');
+$routes->get('login', 'AuthController::login');
+$routes->post('login', 'AuthController::attemptLogin');
+$routes->get('logout', 'AuthController::logout');
 
-$routes->get('inscription', 'Users::registerUser');
-$routes->post('inscription', 'Users::storeRegisterUser');
-$routes->get('inscription/sante', 'Users::registerHealth');
-$routes->post('inscription/sante', 'Users::storeRegisterHealth');
-$routes->get('ajax/imc', 'Users::imcPreview');
+$routes->get('inscription', 'AuthController::registerUser');
+$routes->post('inscription', 'AuthController::storeRegisterUser');
+$routes->get('inscription/sante', 'AuthController::registerHealth');
+$routes->post('inscription/sante', 'AuthController::storeRegisterHealth');
+$routes->get('ajax/imc', 'AuthController::imcPreview');
 
-$routes->get('user', 'Users::user');
-$routes->post('user/objectif', 'Users::saveObjective');
-$routes->post('user/gold', 'Users::buyGold');
-$routes->post('user/portefeuille', 'Users::useWalletCode');
-$routes->get('user/export', 'Users::exportProgram');
+$routes->get('user', 'UserController::user');
+$routes->post('user/objectif', 'UserController::saveObjective');
+$routes->post('user/gold', 'UserController::buyGold');
+$routes->post('user/portefeuille', 'UserController::useWalletCode');
+$routes->get('user/export', 'UserController::exportProgram');
 
-$routes->get('admin', 'Users::adminLogin');
-$routes->post('admin/login', 'Users::attemptAdminLogin');
-$routes->get('admin/dashboard', 'Users::adminDashboard');
-$routes->post('admin/regimes', 'Users::storeRegime');
-$routes->post('admin/regimes/(:num)', 'Users::updateRegime/$1');
-$routes->post('admin/regimes/(:num)/delete', 'Users::deleteRegime/$1');
-$routes->post('admin/activites', 'Users::storeActivity');
-$routes->post('admin/activites/(:num)', 'Users::updateActivity/$1');
-$routes->post('admin/activites/(:num)/delete', 'Users::deleteActivity/$1');
-$routes->post('admin/codes', 'Users::storeWalletCode');
-$routes->post('admin/parametres', 'Users::updateParametres');
+$routes->get('admin', 'AuthController::adminLogin');
+$routes->post('admin/login', 'AuthController::attemptAdminLogin');
+$routes->get('admin/dashboard', 'AdminController::adminDashboard');
+$routes->post('admin/regimes', 'AdminController::storeRegime');
+$routes->post('admin/regimes/(:num)', 'AdminController::updateRegime/$1');
+$routes->post('admin/regimes/(:num)/delete', 'AdminController::deleteRegime/$1');
+$routes->post('admin/activites', 'AdminController::storeActivity');
+$routes->post('admin/activites/(:num)', 'AdminController::updateActivity/$1');
+$routes->post('admin/activites/(:num)/delete', 'AdminController::deleteActivity/$1');
+$routes->post('admin/codes', 'AdminController::storeWalletCode');
+$routes->post('admin/parametres', 'AdminController::updateParametres');

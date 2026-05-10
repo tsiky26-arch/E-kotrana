@@ -14,7 +14,7 @@ git checkout -b feature/login origin/dev (ilay /login io zany nenaranle branche 
 git add .
 git commit -m "message"
 git push -u origin feature/login (ny anaranle feature atao mifanaraka amle changement atao)
-de manomboka eo am git add . ilay mandefa anle changement natao temporaire
+de manomboka eo am git add . ilay mandefa anle changement natgiao temporaire
 git checkout dev 
 git merge feature/login (mandefa anle commit any amle dev )
 
