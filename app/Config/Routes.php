@@ -17,6 +17,8 @@ $routes->post('inscription/sante', 'AuthController::storeRegisterHealth');
 $routes->get('ajax/imc', 'AuthController::imcPreview');
 
 $routes->get('user', 'UserController::user');
+$routes->get('user/profil', 'UserController::profile');
+$routes->post('user/profil', 'UserController::updateProfile');
 $routes->post('user/objectif', 'UserController::saveObjective');
 $routes->post('user/gold', 'UserController::buyGold');
 $routes->post('user/portefeuille', 'UserController::useWalletCode');

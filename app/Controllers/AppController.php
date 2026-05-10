@@ -190,6 +190,9 @@ class AppController extends BaseController
         if (! $db->tableExists('programmes')) {
             $db->query("CREATE TABLE programmes (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, utilisateur_id INT UNSIGNED NOT NULL, regime_id INT UNSIGNED NOT NULL, objectif ENUM('augmenter_poids','reduire_poids','imc_ideal') NOT NULL, date_debut DATE NOT NULL, date_fin DATE NOT NULL, poids_initial DECIMAL(5,2) NOT NULL, poids_cible DECIMAL(5,2) NOT NULL, prix_paye DECIMAL(8,2) NOT NULL, remise_gold TINYINT(1) DEFAULT 0, statut ENUM('actif','termine','annule') DEFAULT 'actif', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
         }
+        if (! $db->tableExists('programme_activites')) {
+            $db->query("CREATE TABLE programme_activites (programme_id INT UNSIGNED NOT NULL, activite_id INT UNSIGNED NOT NULL, PRIMARY KEY (programme_id, activite_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+        }
         if (! $db->tableExists('codes_portefeuille')) {
             $db->query("CREATE TABLE codes_portefeuille (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, code VARCHAR(50) NOT NULL UNIQUE, valeur DECIMAL(8,2) NOT NULL, utilisations_max INT UNSIGNED DEFAULT 1, utilisations_count INT UNSIGNED DEFAULT 0, actif TINYINT(1) DEFAULT 1, expire_at DATETIME DEFAULT NULL, created_by INT UNSIGNED NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
         }
@@ -201,6 +204,9 @@ class AppController extends BaseController
         }
         if (! $db->tableExists('achats_gold')) {
             $db->query("CREATE TABLE achats_gold (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, utilisateur_id INT UNSIGNED NOT NULL UNIQUE, montant_paye DECIMAL(8,2) NOT NULL, achete_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+        }
+        if (! $db->tableExists('historique_poids')) {
+            $db->query("CREATE TABLE historique_poids (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, utilisateur_id INT UNSIGNED NOT NULL, poids_kg DECIMAL(5,2) NOT NULL, imc DECIMAL(5,2) NOT NULL, note VARCHAR(255) DEFAULT NULL, enregistre_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
         }
 
         unset($forge);

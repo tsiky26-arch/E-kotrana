@@ -12,6 +12,7 @@
     <div class="sidebar-brand"><div class="logo-icon">NR</div><div><div class="brand-name">NutriRegime</div><div class="brand-sub">Front Office</div></div></div>
     <div class="sidebar-section">Navigation</div>
     <a class="nav-item active" href="/user">Tableau de bord</a>
+    <a class="nav-item" href="/user/profil">Mon profil</a>
     <a class="nav-item" href="/user/export">Export PDF</a>
     <a class="nav-item" href="/logout">Deconnexion</a>
     <div class="sidebar-bottom"><div class="user-row"><div class="avatar"><?= esc(strtoupper(substr($user['nom_complet'], 0, 2))) ?></div><div class="user-info"><div class="name"><?= esc($user['nom_complet']) ?></div><div class="role"><?= (int) $user['is_gold'] === 1 ? 'Gold actif' : 'Standard' ?></div></div></div></div>
